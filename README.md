@@ -132,3 +132,63 @@ These workflows are **event-driven and loosely coupled**, reflecting real OPD be
 
 ---
 
+---
+
+## Use of AI / Predictive Analytics
+
+AI is used in a **limited, advisory role** to:
+- Estimate consultation duration patterns
+- Predict no-show likelihood
+- Forecast OPD load by doctor/day
+
+Predictions are used only to:
+- Improve buffer efficiency
+- Reduce uncertainty
+
+They do **not** enforce scheduling decisions.
+
+---
+
+## Assumptions
+
+- Hospital maintains basic patient IDs
+- Doctors use a digital system to start/end consultations
+- OPD flow is queue-based
+- Emergency cases override automation
+- AI predictions are probabilistic, not guarantees
+- Partial adoption still delivers value
+
+---
+
+## Expected Impact
+
+If implemented:
+- 30–50% reduction in physical waiting
+- Lower OPD crowding
+- Reduced coordinator stress
+- Better patient experience
+- Improved OPD throughput
+
+---
+
+## Purpose of This Repository
+
+This repository is meant to:
+- Demonstrate **operational thinking**
+- Show how workflows map to automation
+- Illustrate event-driven system design
+- Provide a clear, reviewable automation blueprint
+
+It is intentionally scoped for **clarity over completeness**.
+
+---
+
+## Author Notes
+
+This solution was designed with realism in mind and aligns with how OPDs actually function, rather than imposing idealized scheduling assumptions.
+
+AI was used only to help structure the problem and validate logic.  
+All design decisions, assumptions, and trade-offs are human-defined.
+
+---
+
