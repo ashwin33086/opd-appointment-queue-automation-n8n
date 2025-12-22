@@ -132,5 +132,3 @@ These workflows are **event-driven and loosely coupled**, reflecting real OPD be
 
 ---
 
-## Repository Structure
-
