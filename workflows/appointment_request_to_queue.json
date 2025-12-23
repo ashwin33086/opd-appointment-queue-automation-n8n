@@ -1,4 +1,4 @@
-//Convert an OPD appointment request into a queue entry (not a time slot).
+
 {
   "name": "OPD Appointment Request → Queue Creation",
   "nodes": [
