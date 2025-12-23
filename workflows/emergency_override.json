@@ -1,1 +1,28 @@
+{
+  "name": "OPD Emergency Override Handling",
+  "nodes": [
+    {
+      "name": "Emergency Flag Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "position": [200, 300],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "opd/emergency-override"
+      }
+    },
+    {
+      "name": "Handle Emergency Case",
+      "type": "n8n-nodes-base.function",
+      "position": [450, 300],
+      "parameters": {
+        "functionCode": "// Purpose: Temporarily freeze buffer and insert emergency patient\n// Human override always takes precedence\n\nreturn [{\n  json: {\n    emergencyActive: true,\n    action: \"FREEZE_BUFFER\"\n  }\n}];"
+      }
+    }
+  ],
+  "connections": {
+    "Emergency Flag Trigger": {
+      "main": [[{ "node": "Handle Emergency Case", "type": "main", "index": 0 }]]
+    }
+  }
+}
 
