@@ -1,1 +1,28 @@
+{
+  "name": "Consultation Start → Queue Advancement",
+  "nodes": [
+    {
+      "name": "Consultation Start Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "position": [200, 300],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "opd/consultation-start"
+      }
+    },
+    {
+      "name": "Advance OPD Queue",
+      "type": "n8n-nodes-base.function",
+      "position": [450, 300],
+      "parameters": {
+        "functionCode": "// Purpose: Move queue forward only when consultation actually starts\n// Prevents assumption-based scheduling\n\nreturn [{\n  json: {\n    queueAction: \"ADVANCE_QUEUE\",\n    trigger: \"CONSULTATION_STARTED\"\n  }\n}];"
+      }
+    }
+  ],
+  "connections": {
+    "Consultation Start Trigger": {
+      "main": [[{ "node": "Advance OPD Queue", "type": "main", "index": 0 }]]
+    }
+  }
+}
 
