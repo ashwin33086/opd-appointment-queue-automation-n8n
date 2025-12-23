@@ -1,1 +1,40 @@
+{
+  "name": "OPD No-Show Detection & Handling",
+  "nodes": [
+    {
+      "name": "Buffer Entry Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "position": [200, 300],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "opd/buffer-entry"
+      }
+    },
+    {
+      "name": "Wait for Patient Arrival",
+      "type": "n8n-nodes-base.wait",
+      "position": [450, 300],
+      "parameters": {
+        "amount": 10,
+        "unit": "minutes"
+      }
+    },
+    {
+      "name": "Mark No-Show",
+      "type": "n8n-nodes-base.function",
+      "position": [700, 300],
+      "parameters": {
+        "functionCode": "// Purpose: Remove patient if they don't arrive within buffer window\n// Prevents queue blocking\n\nreturn [{\n  json: {\n    patientStatus: \"NO_SHOW\",\n    action: \"REMOVE_FROM_QUEUE\"\n  }\n}];"
+      }
+    }
+  ],
+  "connections": {
+    "Buffer Entry Trigger": {
+      "main": [[{ "node": "Wait for Patient Arrival", "type": "main", "index": 0 }]]
+    },
+    "Wait for Patient Arrival": {
+      "main": [[{ "node": "Mark No-Show", "type": "main", "index": 0 }]]
+    }
+  }
+}
 
