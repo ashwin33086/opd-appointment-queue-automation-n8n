@@ -1,1 +1,28 @@
+{
+  "name": "OPD Active Buffer Assignment & Queue Stabilization",
+  "nodes": [
+    {
+      "name": "Queue Update Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "position": [200, 300],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "opd/queue-update"
+      }
+    },
+    {
+      "name": "Calculate Active Buffer",
+      "type": "n8n-nodes-base.function",
+      "position": [450, 300],
+      "parameters": {
+        "functionCode": "// Purpose: Maintain rolling buffer of next 3 patients\n// Only buffer patients are asked to be present, others wait virtually\n\nconst opdQueue = $json.opdQueue || [];\nconst bufferSize = 3;\nconst activeBuffer = opdQueue.slice(0, bufferSize);\n\nreturn activeBuffer.map(patient => ({\n  json: {\n    ...patient,\n    bufferActive: true\n  }\n}));"
+      }
+    }
+  ],
+  "connections": {
+    "Queue Update Trigger": {
+      "main": [[{ "node": "Calculate Active Buffer", "type": "main", "index": 0 }]]
+    }
+  }
+}
 
