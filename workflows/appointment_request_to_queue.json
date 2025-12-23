@@ -1,1 +1,28 @@
+//Convert an OPD appointment request into a queue entry (not a time slot).{
+  "name": "OPD Appointment Request → Queue Creation",
+  "nodes": [
+    {
+      "name": "Appointment Request Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "position": [200, 300],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "opd/appointment-request"
+      }
+    },
+    {
+      "name": "Add Patient to OPD Queue",
+      "type": "n8n-nodes-base.function",
+      "position": [450, 300],
+      "parameters": {
+        "functionCode": "// Purpose: Add patient to OPD queue (position-based, not time-based)\n// This reflects real OPD flow where consultation duration is unpredictable\n\nreturn [{\n  json: {\n    patientId: $json.patientId,\n    doctorId: $json.doctorId,\n    visitType: $json.visitType,\n    queueStatus: \"QUEUED\"\n  }\n}];"
+      }
+    }
+  ],
+  "connections": {
+    "Appointment Request Trigger": {
+      "main": [[{ "node": "Add Patient to OPD Queue", "type": "main", "index": 0 }]]
+    }
+  }
+}
 
